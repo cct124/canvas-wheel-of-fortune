@@ -107,10 +107,19 @@ CDN:
         // 传入贝塞尔控制点，默认是匀速转动，
         cvs.bez(...para);
 
-        // 传入prizeInfo数组索引可指定获奖对象。不传入索引则随机转动，每个奖项获奖概率相同。如果每个奖项抽中概率不同可以先按照概率算出索引
-        cvs.start(2).then(res => {
-            // 转动结束得到的结果
-            console.log(res);
+        // 开始画面绘制
+        cvs.translate();
+        cvs.drawRotateWheel(0);
+        cvs.darwPoinDeg();
+        cvs.recoTranslate();
+
+        // 点击开始按钮转动
+        document.getElementById('start').addEventListener('click', () => {
+            // 传入prizeInfo数组索引可指定获奖对象。不传入索引则随机转动，每个奖项获奖概率相同。如果每个奖项抽中概率不同可以先按照概率算出索引
+            cvs.start(2).then(res => {
+                // 转动结束得到的结果
+                console.log(res);
+            });
         });
 
     });

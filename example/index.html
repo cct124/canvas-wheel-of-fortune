@@ -19,6 +19,7 @@
 <body>
     <canvas id="canvas"></canvas>
     <canvas id="bezier"></canvas>
+    <button id="start" class="btn">start</button>
     <script src="./../dist/wheel.min.js"></script>
     <script>
         (function () {
@@ -108,18 +109,23 @@
             ele.height = 600;
             ele.width = 600;
             const canvas = ele.getContext('2d');
-            
+
             downloadImg(['http://qiniu.tocode.live/wheel.png', 'http://qiniu.tocode.live/pointer_center.png']).then(res => {
 
                 const cvs = new wheel.Fortune({ spinNum: 4, prizeInfo, canvas, canvasW: 600, canvasH: 600, bgc: res[0], poin: res[1], poinCenter: true, poinWidth: 60 });
                 window.cvs = cvs;
                 cvs.bez(...para);
+                cvs.translate();
+                cvs.drawRotateWheel(0);
+                cvs.darwPoinDeg();
+                cvs.recoTranslate();
 
-                // 传入prizeInfo数组索引可指定获奖对象
-                cvs.start(2).then(res => {
-                    console.log(res);
+                document.getElementById('start').addEventListener('click', () => {
+                    // 传入prizeInfo数组索引可指定获奖对象
+                    cvs.start(2).then(res => {
+                        console.log(res);
+                    });
                 });
-
             });
 
             const bze = document.getElementById('bezier');
