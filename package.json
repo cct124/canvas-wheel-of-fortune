@@ -24,6 +24,7 @@
     "type": "git",
     "url": "https://github.com/cct124/canvas-wheel-of-fortune"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "devDependencies": {
     "@babel/core": "^7.11.0",
     "@babel/plugin-transform-runtime": "^7.11.0",
