@@ -1,0 +1,37 @@
+{
+  "name": "canvas-wheel-of-fortune",
+  "version": "0.0.1",
+  "description": "原生canvas幸运转盘，通过贝塞尔曲线控制速度。理论上支持小程序，源码不复杂，有需要的同学可以自己修改",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [
+    "转盘",
+    "游戏",
+    "抽奖",
+    "canvas",
+    "wheel of fortune",
+    "wheel",
+    "fortune",
+    "election",
+    "lottery",
+    "raffle"
+  ],
+  "author": "Jane",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cct124/canvas-wheel-of-fortune"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "terser-webpack-plugin": "^3.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

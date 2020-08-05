@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<style>
+    canvas#canvas {
+        background: #f2f2f2;
+    }
+
+    canvas#bezier {
+        border: 2px solid #1c92af;
+    }
+</style>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <canvas id="bezier"></canvas>
+    <script src="./../dist/wheel.min.js"></script>
+    <script>
+        (function () {
+            class CvsCubBez extends wheel.Bez {
+                constructor({ canvas, poin, p1, p2, c1, c2, poinColor }) {
+                    super({ poin, p1, p2, c1, c2 });
+                    this.ctx = canvas;
+                    this.cvsW = this.ctx.canvas.width;
+                    this.cvsH = this.ctx.canvas.height;
+                    this.poinColor = poinColor;
+                }
+
+                poinBezier(cx1, cy1, cx2, cy2) {
+                    this.runBez(cx1, cy1, cx2, cy2)
+                    this.cubic();
+                    this.drawBez();
+                }
+
+                drawBez() {
+                    this.ctx.translate(0, this.cvsH);
+                    this.poins.forEach(p => {
+                        this.drawArc(p[0] * this.cvsW, -p[1] * this.cvsH)
+                    })
+                }
+
+                drawArc(x, y, color) {
+                    this.ctx.fillStyle = this.poinColor
+                    this.ctx.strokeStyle = this.poinColor;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 1, 0, 2 * Math.PI);
+                    this.ctx.fill();
+                    this.ctx.stroke();
+                }
+            }
+
+
+
+            const prizeInfo = [
+                {
+                    name: '深紫罗兰色',
+                    ds: [0, 45]
+                },
+                {
+                    name: '海军蓝',
+                    ds: [45, 90]
+                },
+                {
+                    name: '缥色',
+                    ds: [90, 135]
+                },
+                {
+                    name: '青緑',
+                    ds: [135, 180]
+                },
+                {
+                    name: '緑',
+                    ds: [180, 225]
+                },
+                {
+                    name: '若草色',
+                    ds: [225, 270]
+                },
+                {
+                    name: '栀子色',
+                    ds: [270, 315]
+                },
+                {
+                    name: '黄茶',
+                    ds: [315, 360]
+                },
+            ]
+
+            const para = [.04, .63, 0, 1]
+
+            function downloadImg(arrImgUrl) {
+                return new Promise((resolve, reject) => {
+                    Promise.all(arrImgUrl.map(path => new Promise((resolve, reject) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            resolve(img);
+                        };
+                        img.src = path;
+                    }))).then(resolve)
+                })
+            }
+            const ele = document.getElementById('canvas');
+            ele.height = 600;
+            ele.width = 600;
+            const canvas = ele.getContext('2d');
+            
+            downloadImg(['http://qiniu.tocode.live/wheel.png', 'http://qiniu.tocode.live/pointer_center.png']).then(res => {
+
+                const cvs = new wheel.Fortune({ spinNum: 4, prizeInfo, canvas, canvasW: 600, canvasH: 600, bgc: res[0], poin: res[1], poinCenter: true, poinWidth: 60 });
+                window.cvs = cvs;
+                cvs.bez(...para);
+
+                // 传入prizeInfo数组索引可指定获奖对象
+                cvs.start(2).then(res => {
+                    console.log(res);
+                });
+
+            });
+
+            const bze = document.getElementById('bezier');
+            bze.height = 100;
+            bze.width = 100;
+            const cvs = bze.getContext('2d');
+            const cvsBez = new CvsCubBez({ canvas: cvs, poin: 100, poinColor: '#1b315e' })
+            cvsBez.poinBezier(...para);
+
+        })()
+    </script>
+</body>
+
+</html>
